@@ -4,14 +4,14 @@
 #
 Name     : perl-POD2-Base
 Version  : 0.0301
-Release  : 2
+Release  : 3
 URL      : https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/POD2-Base-0.0301.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/POD2-Base-0.0301.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libp/libpod2-base-perl/libpod2-base-perl_0.043-2.debian.tar.xz
 Summary  : Base module for translations of Perl documentation
 Group    : Development/Tools
 License  : Artistic-1.0-Perl
-Requires: perl-POD2-Base-man
+BuildRequires : buildreq-cpan
 
 %description
 NAME
@@ -20,19 +20,20 @@ SYNOPSIS
 use POD2::Base;
 $pod2 = POD2::Base->new({ lang => 'EO' });
 
-%package man
-Summary: man components for the perl-POD2-Base package.
-Group: Default
+%package dev
+Summary: dev components for the perl-POD2-Base package.
+Group: Development
+Provides: perl-POD2-Base-devel = %{version}-%{release}
 
-%description man
-man components for the perl-POD2-Base package.
+%description dev
+dev components for the perl-POD2-Base package.
 
 
 %prep
-tar -xf %{SOURCE1}
-cd ..
 %setup -q -n POD2-Base-0.0301
-mkdir -p %{_topdir}/BUILD/POD2-Base-0.0301/deblicense/
+cd ..
+%setup -q -T -D -n POD2-Base-0.0301 -b 1
+mkdir -p deblicense/
 mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/POD2-Base-0.0301/deblicense/
 
 %build
@@ -58,9 +59,9 @@ make TEST_VERBOSE=1 test
 %install
 rm -rf %{buildroot}
 if test -f Makefile.PL; then
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
-./Build install --installdirs=site --destdir=%{buildroot}
+./Build install --installdirs=vendor --destdir=%{buildroot}
 fi
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
@@ -69,9 +70,9 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/site_perl/5.26.1/POD2/Base.pm
-/usr/lib/perl5/site_perl/5.26.1/POD2/Base.pod
+/usr/lib/perl5/vendor_perl/5.26.1/POD2/Base.pm
+/usr/lib/perl5/vendor_perl/5.26.1/POD2/Base.pod
 
-%files man
+%files dev
 %defattr(-,root,root,-)
 /usr/share/man/man3/POD2::Base.3
