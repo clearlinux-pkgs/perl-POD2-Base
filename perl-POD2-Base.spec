@@ -4,7 +4,7 @@
 #
 Name     : perl-POD2-Base
 Version  : 0.0301
-Release  : 8
+Release  : 9
 URL      : https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/POD2-Base-0.0301.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/POD2-Base-0.0301.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libp/libpod2-base-perl/libpod2-base-perl_0.043-2.debian.tar.xz
