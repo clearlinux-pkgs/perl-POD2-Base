@@ -4,13 +4,14 @@
 #
 Name     : perl-POD2-Base
 Version  : 0.043
-Release  : 12
+Release  : 13
 URL      : https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/POD2-Base-0.043.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/POD2-Base-0.043.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libp/libpod2-base-perl/libpod2-base-perl_0.043-2.debian.tar.xz
 Summary  : Base module for translations of Perl documentation
 Group    : Development/Tools
 License  : Artistic-1.0-Perl
+Requires: perl-POD2-Base-perl = %{version}-%{release}
 BuildRequires : buildreq-cpan
 
 %description
@@ -24,23 +25,34 @@ $pod2 = POD2::Base->new({ lang => 'EO' });
 Summary: dev components for the perl-POD2-Base package.
 Group: Development
 Provides: perl-POD2-Base-devel = %{version}-%{release}
+Requires: perl-POD2-Base = %{version}-%{release}
 
 %description dev
 dev components for the perl-POD2-Base package.
 
 
+%package perl
+Summary: perl components for the perl-POD2-Base package.
+Group: Default
+Requires: perl-POD2-Base = %{version}-%{release}
+
+%description perl
+perl components for the perl-POD2-Base package.
+
+
 %prep
 %setup -q -n POD2-Base-0.043
-cd ..
-%setup -q -T -D -n POD2-Base-0.043 -b 1
+cd %{_builddir}
+tar xf %{_sourcedir}/libpod2-base-perl_0.043-2.debian.tar.xz
+cd %{_builddir}/POD2-Base-0.043
 mkdir -p deblicense/
-cp -r %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/POD2-Base-0.043/deblicense/
+cp -r %{_builddir}/debian/* %{_builddir}/POD2-Base-0.043/deblicense/
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
+export LANG=C.UTF-8
 if test -f Makefile.PL; then
 %{__perl} Makefile.PL
 make  %{?_smp_mflags}
@@ -50,7 +62,7 @@ else
 fi
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
@@ -70,11 +82,14 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.28.2/POD2/Base.pm
-/usr/lib/perl5/vendor_perl/5.28.2/POD2/Base.pod
-/usr/lib/perl5/vendor_perl/5.28.2/POD2/PT/POD2/Base.pod
 
 %files dev
 %defattr(-,root,root,-)
 /usr/share/man/man3/POD2::Base.3
 /usr/share/man/man3/POD2::PT::POD2::Base.3
+
+%files perl
+%defattr(-,root,root,-)
+/usr/lib/perl5/vendor_perl/5.30.1/POD2/Base.pm
+/usr/lib/perl5/vendor_perl/5.30.1/POD2/Base.pod
+/usr/lib/perl5/vendor_perl/5.30.1/POD2/PT/POD2/Base.pod
