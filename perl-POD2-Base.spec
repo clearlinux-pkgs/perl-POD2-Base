@@ -4,7 +4,7 @@
 #
 Name     : perl-POD2-Base
 Version  : 0.043
-Release  : 15
+Release  : 16
 URL      : https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/POD2-Base-0.043.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/POD2-Base-0.043.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libp/libpod2-base-perl/libpod2-base-perl_0.043-2.debian.tar.xz
@@ -90,6 +90,6 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files perl
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.30.3/POD2/Base.pm
-/usr/lib/perl5/vendor_perl/5.30.3/POD2/Base.pod
-/usr/lib/perl5/vendor_perl/5.30.3/POD2/PT/POD2/Base.pod
+/usr/lib/perl5/vendor_perl/5.32.1/POD2/Base.pm
+/usr/lib/perl5/vendor_perl/5.32.1/POD2/Base.pod
+/usr/lib/perl5/vendor_perl/5.32.1/POD2/PT/POD2/Base.pod
